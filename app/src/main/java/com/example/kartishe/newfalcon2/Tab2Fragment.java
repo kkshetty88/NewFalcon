@@ -1,5 +1,6 @@
 package com.example.kartishe.newfalcon2;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
 /**
  * Created by kartishe on 10/14/15.
  */
-public class Tab2Fragment extends Fragment {
+public class Tab2Fragment extends Fragment implements View.OnClickListener{
 
     public static final int[] JOYFUL_COLORS = {
             Color.rgb(67,115,192), Color.rgb(67,192,100),
@@ -56,12 +58,14 @@ public class Tab2Fragment extends Fragment {
 
     private GraphicalView mChartView;
     private GraphicalView mChartView1;
-    private ImageView img_interface1;
-    private ImageView img_interface2;
-    private ImageView img_interface3;
+
+    private ToggleButton img_interface1;
+    private ToggleButton img_interface2;
+    private ToggleButton img_interface3;
 
     private LineChart interfaceLineChart;
     @Override
+    @TargetApi(16)
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -76,23 +80,22 @@ public class Tab2Fragment extends Fragment {
         //((TextView) rootView.findViewById(android.R.id.text1)).setText(
         //        "Interface Stats");
 
-        img_interface1 = (ImageView) rootView.findViewById(R.id.image_interface1);
-        img_interface2 = (ImageView) rootView.findViewById(R.id.image_interface2);
-        img_interface3 = (ImageView) rootView.findViewById(R.id.image_interface3);
+        img_interface1 = (ToggleButton) rootView.findViewById(R.id.image_interface1);
+        img_interface2 = (ToggleButton) rootView.findViewById(R.id.image_interface2);
+        img_interface3 = (ToggleButton) rootView.findViewById(R.id.image_interface3);
         Boolean hostAvailable = true;
 
         Drawable green = ContextCompat.getDrawable(getActivity().getBaseContext(), R.drawable.green);
         Drawable red = ContextCompat.getDrawable(getActivity().getBaseContext(),R.drawable.red);
 
-        img_interface1.setImageDrawable(green);
+        img_interface1.setOnClickListener(this);
+        img_interface2.setOnClickListener(this);
+        img_interface3.setOnClickListener(this);
 
-        if (hostAvailable)
-        {
-            img_interface1.setImageDrawable(green);
-
-        }
-        img_interface2.setImageDrawable(red);
-        img_interface3.setImageDrawable(green);
+        //write logic to set the interfaces based on rest api results
+        img_interface1.setBackground(red);
+        img_interface2.setBackground(red);
+        img_interface3.setBackground(red);
 
         mRenderer.setApplyBackgroundColor(true);
         //mRenderer.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -177,7 +180,7 @@ public class Tab2Fragment extends Fragment {
         }
 
         // create a dataset and give it a type
-        LineDataSet set2 = new LineDataSet(yVals2, "GE 2");
+        LineDataSet set2 = new LineDataSet(yVals2, "Tunnel");
         set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
         set2.setColor(Color.RED);
         set2.setCircleColor(Color.WHITE);
@@ -190,33 +193,9 @@ public class Tab2Fragment extends Fragment {
         //set2.setFillFormatter(new MyFillFormatter(900f));
 
 
-        ArrayList<Entry> yVals3 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 450;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals3.add(new Entry(val, i));
-        }
-
-        // create a dataset and give it a type
-        LineDataSet set3 = new LineDataSet(yVals3, "GE 3");
-        set3.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        set3.setColor(Color.CYAN);
-        set3.setCircleColor(Color.WHITE);
-        set3.setLineWidth(2f);
-        //set2.setCircleRadius(3f);
-        set3.setFillAlpha(65);
-        set3.setFillColor(Color.CYAN);
-        set3.setDrawCircleHole(false);
-        set3.setHighLightColor(Color.rgb(244, 117, 117));
-        //set2.setFillFormatter(new MyFillFormatter(900f));
-
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set2);
         dataSets.add(set1); // add the datasets
-        dataSets.add(set3);
 
         // create a data object with the datasets
         LineData data = new LineData(xVals, dataSets);
@@ -225,5 +204,36 @@ public class Tab2Fragment extends Fragment {
 
         // set data
         interfaceLineChart.setData(data);
+    }
+
+    @TargetApi(16)
+    public void onClick(View v) {
+        final Drawable green = ContextCompat.getDrawable(getActivity().getBaseContext(), R.drawable.green);
+        final Drawable red = ContextCompat.getDrawable(getActivity().getBaseContext(),R.drawable.red);
+
+        switch(v.getId()){
+            case R.id.image_interface1:
+                if(img_interface1.isChecked())
+                    img_interface1.setBackground(green);
+                else
+                    img_interface1.setBackground(red);
+                break;
+
+            case R.id.image_interface2:
+                if(img_interface2.isChecked())
+                    img_interface2.setBackground(green);
+                else
+                    img_interface2.setBackground(red);
+                break;
+
+            case R.id.image_interface3:
+                if(img_interface3.isChecked())
+                    img_interface3.setBackground(green);
+                else
+                    img_interface3.setBackground(red);
+                break;
+
+
+        }
     }
 }
