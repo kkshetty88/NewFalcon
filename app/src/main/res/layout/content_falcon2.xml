@@ -33,6 +33,7 @@
         android:focusable="false"
         android:textIsSelectable="true"
         android:textStyle="bold"
-        android:textSize="@dimen/abc_text_size_button_material" />
+        android:textSize="@dimen/abc_text_size_button_material"
+        android:textColor="@android:color/background_dark" />
 
 </RelativeLayout>

@@ -20,15 +20,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class Falcon2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Context ctx;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ctx = getApplicationContext();
         setContentView(R.layout.activity_falcon2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,7 +47,10 @@ public class Falcon2Activity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         String[] items = {"CSR San Jose","CSR 314","CSR 316"};
-        ListView list = (ListView) findViewById(R.id.label2);
+        CustomListAdapter adapter=new CustomListAdapter(this, items, R.drawable.csr1000v);
+        ListView list=(ListView)findViewById(R.id.label2);
+        list.setAdapter(adapter);
+        /*ListView list = (ListView) findViewById(R.id.label2);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getBaseContext(),
                 R.layout.list_item ,
@@ -51,12 +58,17 @@ public class Falcon2Activity extends AppCompatActivity
         );
         // Binding resources Array to ListAdapter
         //SpecialAdapter adapter = new SpecialAdapter(this, items);
-        list.setAdapter(adapter);
+        list.setAdapter(adapter);*/
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // selected item
-                String product = ((TextView) view).getText().toString();
+                LinearLayout LL = (LinearLayout) view;
+                LinearLayout LL3 = (LinearLayout)LL.getChildAt(1);
+                TextView LL2 = (TextView)LL3.getChildAt(0);
+
+                String product = LL2.getText().toString();
+               // String product = ((TextView) view).getText().toString();
                 // Launching new Activity on selecting single List Item
                 Intent i = new Intent(getApplicationContext(), CollectionDemoActivity.class);
                 // sending data to new activity
@@ -108,7 +120,7 @@ public class Falcon2Activity extends AppCompatActivity
             // Handle the camera action
             //Intent i=new Intent(Falcon2Activity.this, FalconDeviceListActivity.class);
             //startActivity(i);
-            String[] items = {"CSR San Jose","CSR 314","CSR 316"};
+            /*String[] items = {"CSR San Jose","CSR 314","CSR 316"};
             ListView list = (ListView) findViewById(R.id.label2);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                     getBaseContext(),
@@ -117,12 +129,21 @@ public class Falcon2Activity extends AppCompatActivity
             );
             // Binding resources Array to ListAdapter
             //SpecialAdapter adapter = new SpecialAdapter(this, items);
+            list.setAdapter(adapter);*/
+            String[] items = {"CSR San Jose","CSR 314","CSR 316"};
+            CustomListAdapter adapter=new CustomListAdapter(this, items, R.drawable.csr1000v);
+            ListView list=(ListView)findViewById(R.id.label2);
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     // selected item
-                    String product = ((TextView) view).getText().toString();
+                    LinearLayout LL = (LinearLayout) view;
+                    LinearLayout LL3 = (LinearLayout)LL.getChildAt(1);
+                    TextView LL2 = (TextView)LL3.getChildAt(0);
+
+                    String product = LL2.getText().toString();
+                    //String product = ((TextView) view).getText().toString();
                     // Launching new Activity on selecting single List Item
                     Intent i = new Intent(getApplicationContext(), CollectionDemoActivity.class);
                     // sending data to new activity

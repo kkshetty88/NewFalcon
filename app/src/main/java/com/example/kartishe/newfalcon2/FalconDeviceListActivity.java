@@ -22,7 +22,7 @@ public class FalconDeviceListActivity extends android.app.ListActivity {
         String[] adobe_products = {"1","2","3"};
 
         // Binding resources Array to ListAdapter
-        this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.label1, adobe_products));
+        //this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.label1, adobe_products));
         ListView lv = getListView();
 
         // listening to single list item on click
