@@ -9,6 +9,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/processBarChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/image1"
