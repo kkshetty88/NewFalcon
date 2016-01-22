@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 
 public class CollectionDemoActivity extends FragmentActivity {
@@ -21,13 +22,17 @@ public class CollectionDemoActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
-
+        //Toast.makeText(CollectionDemoActivity.this, getIntent().getStringExtra("product"), Toast.LENGTH_SHORT).show();
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
         mDemoCollectionPagerAdapter =
                 new DemoCollectionPagerAdapter(getSupportFragmentManager());
+
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+    }
+    public int getCSRData(){
+        return Integer.parseInt(getIntent().getStringExtra("product"));
     }
 }
 
