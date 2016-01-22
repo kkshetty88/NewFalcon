@@ -38,8 +38,6 @@ public class FalconDeviceListActivity extends android.app.ListActivity {
                 // sending data to new activity
                 i.putExtra("product", product);
                 startActivity(i);
-
-
             }
         });
 

@@ -1,10 +1,12 @@
 package com.example.kartishe.newfalcon2;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,16 +32,7 @@ public class Falcon2Activity extends AppCompatActivity
         setContentView(R.layout.activity_falcon2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -45,6 +41,30 @@ public class Falcon2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        String[] items = {"CSR San Jose","CSR 314","CSR 316"};
+        ListView list = (ListView) findViewById(R.id.label2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getBaseContext(),
+                R.layout.list_item ,
+                items
+        );
+        // Binding resources Array to ListAdapter
+        //SpecialAdapter adapter = new SpecialAdapter(this, items);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // selected item
+                String product = ((TextView) view).getText().toString();
+                // Launching new Activity on selecting single List Item
+                Intent i = new Intent(getApplicationContext(), CollectionDemoActivity.class);
+                // sending data to new activity
+                i.putExtra("product", product);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -86,8 +106,30 @@ public class Falcon2Activity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_camara) {
             // Handle the camera action
-            Intent i=new Intent(Falcon2Activity.this, FalconDeviceListActivity.class);
-            startActivity(i);
+            //Intent i=new Intent(Falcon2Activity.this, FalconDeviceListActivity.class);
+            //startActivity(i);
+            String[] items = {"CSR San Jose","CSR 314","CSR 316"};
+            ListView list = (ListView) findViewById(R.id.label2);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    getBaseContext(),
+                    R.layout.list_item ,
+                    items
+            );
+            // Binding resources Array to ListAdapter
+            //SpecialAdapter adapter = new SpecialAdapter(this, items);
+            list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    // selected item
+                    String product = ((TextView) view).getText().toString();
+                    // Launching new Activity on selecting single List Item
+                    Intent i = new Intent(getApplicationContext(), CollectionDemoActivity.class);
+                    // sending data to new activity
+                    i.putExtra("product", product);
+                    startActivity(i);
+                }
+            });
 
 
         } else if (id == R.id.nav_share) {

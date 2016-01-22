@@ -31,8 +31,8 @@ public class CollectionDemoActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
     }
-    public int getCSRData(){
-        return Integer.parseInt(getIntent().getStringExtra("product"));
+    public String getCSRData(){
+        return (getIntent().getStringExtra("product"));
     }
 }
 

@@ -47,7 +47,16 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
         CollectionDemoActivity fragActivity = (CollectionDemoActivity)getActivity();
         String csrText = fragActivity.getCSRData()+"";
         //Toast.makeText(getActivity(), csrText, Toast.LENGTH_SHORT).show();
-        csr_id = Integer.parseInt(csrText);
+        //csr_id = Integer.parseInt(csrText);
+
+        if (csrText.equals("CSR San Jose")){
+            csr_id =1;
+        }else if(csrText.equals("CSR 314")){
+            csr_id =2;
+        }else {
+            csr_id =3;
+        }
+
         if(csr_id == 1){
             //if (!isRestExecuted) {
             mReceiver = new RestApiResultReceiver(new Handler());
@@ -92,11 +101,15 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
         switch (resultCode) {
             case RestApiService.STATUS_RUNNING:
 
-                getActivity().setProgressBarIndeterminateVisibility(true);
+                if(getActivity()!= null){
+                    getActivity().setProgressBarIndeterminateVisibility(true);
+                }
                 break;
             case RestApiService.STATUS_FINISHED:
                 /* Hide progress & extract result from bundle */
-                getActivity().setProgressBarIndeterminateVisibility(false);
+                if(getActivity()!= null) {
+                    getActivity().setProgressBarIndeterminateVisibility(false);
+                }
 
                 String results[] = resultData.getStringArray("result");
                 ObjectMapper mapper = new ObjectMapper();
