@@ -1,9 +1,16 @@
 package com.example.kartishe.newfalcon2;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +38,7 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
     View rootView;
     final String[] url = {"https://172.25.223.182:55443/api/v1/global/host-name", "https://172.25.223.182:55443/api/v1/global/host-name"};
     static String hname = "";
+    int gen_flag = 0;
 
     private  static boolean isRestExecuted = false;
 
@@ -48,6 +56,10 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
         String csrText = fragActivity.getCSRData()+"";
         //Toast.makeText(getActivity(), csrText, Toast.LENGTH_SHORT).show();
         //csr_id = Integer.parseInt(csrText);
+        MyTimerTask myTask = new MyTimerTask();
+        java.util.Timer myTimer = new java.util.Timer();
+
+        myTimer.schedule(myTask, 60000, 150000);
 
         if (csrText.equals("CSR San Jose")){
             csr_id =1;
@@ -174,5 +186,36 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
 
         });
 
+    }
+    class MyTimerTask extends java.util.TimerTask {
+        public void run() {
+
+            generateNotification();
+        }
+    }
+    public void generateNotification() {
+        if(gen_flag == 0) {
+            Intent notificationIntent = new Intent(getContext(), CollectionDemoActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(getContext(),
+                    0, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+
+            NotificationManager nm = (NotificationManager) getContext()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+
+            Resources res = getContext().getResources();
+            Notification.Builder builder = new Notification.Builder(getContext());
+
+            builder.setContentIntent(contentIntent)
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setWhen(System.currentTimeMillis())
+                    .setAutoCancel(true)
+                    .setContentTitle("Error")
+                    .setContentText("License Upgrade Needed for CSR San Jose");
+            Notification n = builder.getNotification();
+
+            nm.notify(1, n);
+            gen_flag = 1;
+        }
     }
 }
