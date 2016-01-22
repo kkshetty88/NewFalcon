@@ -93,9 +93,13 @@ public class Tab2Fragment extends Fragment implements View.OnClickListener{
         img_interface3.setOnClickListener(this);
 
         //write logic to set the interfaces based on rest api results
-        img_interface1.setBackground(red);
+        img_interface1.setChecked(true);
+        img_interface1.setBackground(green);
+
         img_interface2.setBackground(red);
-        img_interface3.setBackground(red);
+
+        img_interface3.setChecked(true);
+        img_interface3.setBackground(green);
 
         mRenderer.setApplyBackgroundColor(true);
         //mRenderer.setBackgroundColor(Color.parseColor("#ffffff"));
