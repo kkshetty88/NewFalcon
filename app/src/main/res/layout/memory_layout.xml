@@ -9,12 +9,32 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/cpuRTChart"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        >
+    </com.github.mikephil.charting.charts.LineChart>
+
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/processBarChart"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+    </com.github.mikephil.charting.charts.BarChart>
 
-    <LinearLayout
+
+    <!--LinearLayout
         android:id="@+id/image1"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -26,14 +46,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
 
-    </LinearLayout>
+    </LinearLayout-->
 
-    <LinearLayout
+    <!--LinearLayout
         android:id="@+id/image2"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="167dp"></LinearLayout>
+        android:layout_marginTop="167dp"></LinearLayout-->
 </RelativeLayout>

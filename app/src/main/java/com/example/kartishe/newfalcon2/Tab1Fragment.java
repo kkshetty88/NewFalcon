@@ -113,11 +113,15 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
         switch (resultCode) {
             case RestApiService.STATUS_RUNNING:
 
-                getActivity().setProgressBarIndeterminateVisibility(true);
+                if(getActivity()!= null){
+                    getActivity().setProgressBarIndeterminateVisibility(true);
+                }
                 break;
             case RestApiService.STATUS_FINISHED:
                 /* Hide progress & extract result from bundle */
-                getActivity().setProgressBarIndeterminateVisibility(false);
+                if(getActivity()!= null) {
+                    getActivity().setProgressBarIndeterminateVisibility(false);
+                }
 
                 String results[] = resultData.getStringArray("result");
                 ObjectMapper mapper = new ObjectMapper();
