@@ -19,7 +19,7 @@ public class FalconDeviceListActivity extends android.app.ListActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_falcon2);
         // storing string resources into Array
-        String[] adobe_products = {"a","b","c"};
+        String[] adobe_products = {"1","2","3"};
 
         // Binding resources Array to ListAdapter
         this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.label1, adobe_products));

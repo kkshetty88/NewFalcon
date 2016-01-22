@@ -44,6 +44,10 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
                 "CSR1000V");
 
         int csr_id = args.getInt(ARG_OBJECT);
+        CollectionDemoActivity fragActivity = (CollectionDemoActivity)getActivity();
+        String csrText = fragActivity.getCSRData()+"";
+        //Toast.makeText(getActivity(), csrText, Toast.LENGTH_SHORT).show();
+        csr_id = Integer.parseInt(csrText);
         if(csr_id == 1){
             //if (!isRestExecuted) {
             mReceiver = new RestApiResultReceiver(new Handler());

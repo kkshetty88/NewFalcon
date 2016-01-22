@@ -39,7 +39,7 @@ public class FalconCSRInformation extends Fragment {
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.not_working_tab);
 
         Bundle args = getArguments();
-        mTabHost.addTab(mTabHost.newTabSpec("Tab1").setIndicator("CSR"+args.getInt(ARG_OBJECT)),
+        mTabHost.addTab(mTabHost.newTabSpec("Tab1").setIndicator("VM Info"),
                 Tab1Fragment.class,args);
         mTabHost.addTab(mTabHost.newTabSpec("Tab2").setIndicator("Intf"),
                 Tab2Fragment.class,args);
