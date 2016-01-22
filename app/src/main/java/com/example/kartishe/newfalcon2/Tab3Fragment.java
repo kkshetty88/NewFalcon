@@ -3,24 +3,20 @@ package com.example.kartishe.newfalcon2;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.util.ArrayList;
 
@@ -28,25 +24,8 @@ import java.util.ArrayList;
  * Created by kartishe on 10/14/15.
  */
 public class Tab3Fragment extends Fragment {
-
-    public static final int[] JOYFUL_COLORS = {
-            Color.rgb(67,115,192), Color.rgb(67,192,100),
-            Color.rgb(217, 80, 138), Color.rgb(254, 149, 7), Color.rgb(254, 247, 120),
-            Color.rgb(106, 167, 134), Color.rgb(53, 194, 209)
-    };
-    // Color.rgb(195,192,182),Color.rgb(67,115,192),
-    private static int[] COLORS = new int[] { JOYFUL_COLORS[0], JOYFUL_COLORS[1],JOYFUL_COLORS[2],JOYFUL_COLORS[3],};
-    private static double[] VALUES = new double[] { 30,70 };
-
-    private static String[] NAME_LIST = new String[] { "Used", "Free"};
-
-    private CategorySeries mSeries= new CategorySeries("");
-
-    private DefaultRenderer mRenderer = new DefaultRenderer();
-
-    private GraphicalView mChartView;
-
-    private BarChart mChart;
+    private BarChart processUsageBarChart;
+    private LineChart cpuUsageLineChart;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -54,68 +33,27 @@ public class Tab3Fragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.memory_layout, container, false);
-        mChart = (BarChart) v.findViewById(R.id.processBarChart);
+        cpuUsageLineChart = (LineChart) v.findViewById(R.id.cpuRTChart);
+        setData(20, 30);
+        cpuUsageLineChart.animateX(2500);
+        cpuUsageLineChart.invalidate();
 
-        mChart.setDescription("");
-        //mChart.setOnChartGestureListener(this);
+        processUsageBarChart = (BarChart) v.findViewById(R.id.processBarChart);
+
+        processUsageBarChart.setDescription("");
+        //processUsageBarChart.setOnChartGestureListener(this);
         //MyMarkerView mv = new MyMarkerView(getActivity(), R.layout.custom_marker_view);
-        //mChart.setMarkerView(mv);
-        mChart.setHighlightEnabled(false);
-        mChart.setDrawGridBackground(false);
-        mChart.setDrawBarShadow(false);
+        //processUsageBarChart.setMarkerView(mv);
+        processUsageBarChart.setHighlightEnabled(false);
+        processUsageBarChart.setDrawGridBackground(false);
+        processUsageBarChart.setDrawBarShadow(false);
         BarData data = new BarData(getXAxisValues(), getDataSet());
-        mChart.setData(data);
-        mChart.setDescription("My Chart");
-        mChart.animateXY(2000, 2000);
-        mChart.invalidate();
+        processUsageBarChart.setData(data);
+        processUsageBarChart.setDescription("My Chart");
+        processUsageBarChart.animateXY(2000, 2000);
+        processUsageBarChart.invalidate();
 
         return v;
-        /*
-        Log.d("sheikh","");
-        View rootView = inflater.inflate(
-                R.layout.memory_layout, container, false);
-        //((TextView) rootView.findViewById(android.R.id.text1)).setText(
-        //        "Memory Stats");
-
-
-        mRenderer.setApplyBackgroundColor(true);
-        //mRenderer.setBackgroundColor(Color.parseColor("#ffffff"));
-
-        mRenderer.setLabelsTextSize(50);
-        mRenderer.setLegendTextSize(50);
-        mRenderer.setMargins(new int[]{20, 30, 15, 0});
-        mRenderer.setZoomButtonsVisible(false);
-        mRenderer.setStartAngle(90);
-
-        //mrenderer.setChartTitle("Efforts");
-        //mrenderer.setChartTitleTextSize((float) 30);
-        mRenderer.setShowLabels(false);
-        //renderer.setLabelsTextSize(20);
-        //renderer.setLegendTextSize(25);
-        mRenderer.setDisplayValues(true);
-
-        if (mSeries.getItemCount() !=VALUES.length) {
-            for (int i = 0; i < VALUES.length; i++) {
-                mSeries.add(NAME_LIST[i] + " ", VALUES[i]);
-                SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
-                renderer.setColor(COLORS[i]);
-                renderer.setDisplayBoundingPoints(false);
-                mRenderer.addSeriesRenderer(renderer);
-            }
-        }
-
-        LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.image1);
-        mChartView = ChartFactory.getPieChartView(getActivity().getBaseContext(), mSeries, mRenderer);
-        mRenderer.setClickEnabled(true);
-        mRenderer.setSelectableBuffer(10);
-        layout.addView(mChartView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        if (mChartView != null) {
-            mChartView.repaint();
-        }
-
-        return rootView;
-        */
     }
 
     private ArrayList<BarDataSet> getDataSet() {
@@ -162,13 +100,82 @@ public class Tab3Fragment extends Fragment {
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("JAN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAY");
+        xAxis.add("QoS stats process");
+        xAxis.add("DHCPD Receive");
+        xAxis.add("IP ARP Retry Age");
+        xAxis.add("MCP TIPC");
+        xAxis.add("IPC ISSU Dispatch");
         xAxis.add("JUN");
         return xAxis;
+    }
+
+    private void setData(int count, float range) {
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < count; i++) {
+            xVals.add((i) + "");
+        }
+
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range / 2f;
+            float val = (float) (Math.random() * mult) + 50;// + (float)
+            // ((mult *
+            // 0.1) / 10);
+            yVals1.add(new Entry(val, i));
+        }
+
+        // create a dataset and give it a type
+        LineDataSet set1 = new LineDataSet(yVals1, "Cpu 1");
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set1.setColor(ColorTemplate.getHoloBlue());
+        set1.setCircleColor(Color.WHITE);
+        set1.setLineWidth(2f);
+        //set1.setCircleRadius(3f);
+        set1.setFillAlpha(65);
+        set1.setFillColor(ColorTemplate.getHoloBlue());
+        set1.setHighLightColor(Color.rgb(244, 117, 117));
+        set1.setDrawCircleHole(false);
+        //set1.setFillFormatter(new MyFillFormatter(0f));
+//        set1.setDrawHorizontalHighlightIndicator(false);
+//        set1.setVisible(false);
+//        set1.setCircleHoleColor(Color.WHITE);
+
+        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range;
+            float val = (float) (Math.random() * mult) + 450;// + (float)
+            // ((mult *
+            // 0.1) / 10);
+            yVals2.add(new Entry(val, i));
+        }
+
+        // create a dataset and give it a type
+        LineDataSet set2 = new LineDataSet(yVals2, "Cpu 2");
+        set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        set2.setColor(Color.RED);
+        set2.setCircleColor(Color.WHITE);
+        set2.setLineWidth(2f);
+        //set2.setCircleRadius(3f);
+        set2.setFillAlpha(65);
+        set2.setFillColor(Color.RED);
+        set2.setDrawCircleHole(false);
+        set2.setHighLightColor(Color.rgb(244, 117, 117));
+        //set2.setFillFormatter(new MyFillFormatter(900f));
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set2);
+        dataSets.add(set1); // add the datasets
+
+        // create a data object with the datasets
+        LineData data = new LineData(xVals, dataSets);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(9f);
+
+        // set data
+        cpuUsageLineChart.setData(data);
     }
 
 }
