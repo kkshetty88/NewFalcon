@@ -43,7 +43,7 @@ public class FalconCSRInformation extends Fragment {
                 Tab1Fragment.class,args);
         mTabHost.addTab(mTabHost.newTabSpec("Tab2").setIndicator("Intf"),
                 Tab2Fragment.class,args);
-        mTabHost.addTab(mTabHost.newTabSpec("Tab3").setIndicator("Memory"),
+        mTabHost.addTab(mTabHost.newTabSpec("Tab3").setIndicator("Monitoring"),
                 Tab3Fragment.class,args);
 /*
         for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
