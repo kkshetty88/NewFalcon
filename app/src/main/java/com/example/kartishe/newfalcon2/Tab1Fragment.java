@@ -47,7 +47,16 @@ public class Tab1Fragment extends Fragment implements RestApiResultReceiver.Rece
         CollectionDemoActivity fragActivity = (CollectionDemoActivity)getActivity();
         String csrText = fragActivity.getCSRData()+"";
         //Toast.makeText(getActivity(), csrText, Toast.LENGTH_SHORT).show();
-        csr_id = Integer.parseInt(csrText);
+        //csr_id = Integer.parseInt(csrText);
+
+        if (csrText.equals("CSR San Jose")){
+            csr_id =1;
+        }else if(csrText.equals("CSR 314")){
+            csr_id =2;
+        }else {
+            csr_id =3;
+        }
+
         if(csr_id == 1){
             //if (!isRestExecuted) {
             mReceiver = new RestApiResultReceiver(new Handler());
