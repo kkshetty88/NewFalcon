@@ -78,13 +78,13 @@
 
     </TableLayout>
 
-    <LinearLayout
-        android:id="@+id/image12"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/interfaceLineChart"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/table"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"></LinearLayout>
+        android:layout_marginTop="17dp"></com.github.mikephil.charting.charts.LineChart>
 
 </RelativeLayout>

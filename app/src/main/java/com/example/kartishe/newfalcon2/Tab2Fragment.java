@@ -15,12 +15,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.model.SeriesSelection;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
+
+import java.util.ArrayList;
 
 /**
  * Created by kartishe on 10/14/15.
@@ -50,12 +59,19 @@ public class Tab2Fragment extends Fragment {
     private ImageView img_interface1;
     private ImageView img_interface2;
     private ImageView img_interface3;
+
+    private LineChart interfaceLineChart;
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(
                 R.layout.interface_layout, container, false);
+
+        interfaceLineChart = (LineChart) rootView.findViewById(R.id.interfaceLineChart);
+        setData(20, 30);
+        interfaceLineChart.animateX(2500);
+        interfaceLineChart.invalidate();
 
         //((TextView) rootView.findViewById(android.R.id.text1)).setText(
         //        "Interface Stats");
@@ -103,7 +119,7 @@ public class Tab2Fragment extends Fragment {
                 mRenderer.addSeriesRenderer(renderer);
             }
         }
-
+/*
         LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.image12);
         mChartView = ChartFactory.getPieChartView(getActivity().getBaseContext(), mSeries, mRenderer);
         mRenderer.setClickEnabled(true);
@@ -113,8 +129,101 @@ public class Tab2Fragment extends Fragment {
         if (mChartView != null) {
             mChartView.repaint();
         }
-
+*/
         return rootView;
     }
 
+    private void setData(int count, float range) {
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < count; i++) {
+            xVals.add((i) + "");
+        }
+
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range / 2f;
+            float val = (float) (Math.random() * mult) + 50;// + (float)
+            // ((mult *
+            // 0.1) / 10);
+            yVals1.add(new Entry(val, i));
+        }
+
+        // create a dataset and give it a type
+        LineDataSet set1 = new LineDataSet(yVals1, "GE 1");
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set1.setColor(ColorTemplate.getHoloBlue());
+        set1.setCircleColor(Color.WHITE);
+        set1.setLineWidth(2f);
+        //set1.setCircleRadius(3f);
+        set1.setFillAlpha(65);
+        set1.setFillColor(ColorTemplate.getHoloBlue());
+        set1.setHighLightColor(Color.rgb(244, 117, 117));
+        set1.setDrawCircleHole(false);
+        //set1.setFillFormatter(new MyFillFormatter(0f));
+//        set1.setDrawHorizontalHighlightIndicator(false);
+//        set1.setVisible(false);
+//        set1.setCircleHoleColor(Color.WHITE);
+
+        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range;
+            float val = (float) (Math.random() * mult) + 450;// + (float)
+            // ((mult *
+            // 0.1) / 10);
+            yVals2.add(new Entry(val, i));
+        }
+
+        // create a dataset and give it a type
+        LineDataSet set2 = new LineDataSet(yVals2, "GE 2");
+        set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        set2.setColor(Color.RED);
+        set2.setCircleColor(Color.WHITE);
+        set2.setLineWidth(2f);
+        //set2.setCircleRadius(3f);
+        set2.setFillAlpha(65);
+        set2.setFillColor(Color.RED);
+        set2.setDrawCircleHole(false);
+        set2.setHighLightColor(Color.rgb(244, 117, 117));
+        //set2.setFillFormatter(new MyFillFormatter(900f));
+
+
+        ArrayList<Entry> yVals3 = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = range;
+            float val = (float) (Math.random() * mult) + 450;// + (float)
+            // ((mult *
+            // 0.1) / 10);
+            yVals3.add(new Entry(val, i));
+        }
+
+        // create a dataset and give it a type
+        LineDataSet set3 = new LineDataSet(yVals3, "GE 3");
+        set3.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        set3.setColor(Color.CYAN);
+        set3.setCircleColor(Color.WHITE);
+        set3.setLineWidth(2f);
+        //set2.setCircleRadius(3f);
+        set3.setFillAlpha(65);
+        set3.setFillColor(Color.CYAN);
+        set3.setDrawCircleHole(false);
+        set3.setHighLightColor(Color.rgb(244, 117, 117));
+        //set2.setFillFormatter(new MyFillFormatter(900f));
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set2);
+        dataSets.add(set1); // add the datasets
+        dataSets.add(set3);
+
+        // create a data object with the datasets
+        LineData data = new LineData(xVals, dataSets);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(9f);
+
+        // set data
+        interfaceLineChart.setData(data);
+    }
 }
